@@ -6,21 +6,21 @@ RUN set -ex; \
 	\
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
-		libxapian-ruby1.9.1 \
-		xapian-omega \
-		libxapian-dev \
-		xpdf \
 		antiword \
-		unzip \
 		catdoc \
-		libwpd-0.9-9 \
-		libwps-0.2-2 \
-		gzip \
-		unrtf \
 		catdvi \
 		djview \
 		djview3 \
+		gzip \
+		libwpd-0.9-9 \
+		libwps-0.2-2 \
+		libxapian-dev \
+		libxapian-ruby1.9.1 \
+		unrtf \
+		unzip \
 		uuid \
 		uuid-dev \
+		xapian-omega \
+		xpdf \
 	; \
 	rm -rf /var/lib/apt/lists/*
