@@ -14,5 +14,5 @@ before_install:
 
 script:
   - docker build -t ppschweiz/redmine .
-  - docker run --name redmine --it --rm --env='DB_ADAPTER=mysql2' --env='DB_NAME=redmine_test' --env='DB_USER=travis' ppschweiz/redmine
+  - docker run --name redmine -d --rm --volume=/tmp/redmine:/home/redmine/data --env='DB_ADAPTER=mysql2' --env='DB_NAME=redmine_test' --env='DB_USER=travis' ppschweiz/redmine
   - docker ps | grep -q redmine
