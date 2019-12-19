@@ -20,7 +20,7 @@ jobs:
       run: wget -qO- 'https://github.com/tianon/pgp-happy-eyeballs/raw/master/hack-my-builds.sh' | bash
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag otrs:$(date +%s)
+      run: docker build --tag redmine:$(date +%s) .
 
     - name: Show images
       run: docker images
