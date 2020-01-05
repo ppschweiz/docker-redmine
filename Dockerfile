@@ -1,4 +1,4 @@
-FROM sameersbn/redmine:3.4.12
+FROM sameersbn/redmine:3.4.13
 
 # Install DMSF plugin dependencies
 # https://github.com/danmunn/redmine_dmsf#dependencies
