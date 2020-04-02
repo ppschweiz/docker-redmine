@@ -1,6 +1,6 @@
-FROM sameersbn/redmine:3.4.13
+FROM redmine:3.4.13
 
-# Install DMSF plugin dependencies
+# Build and install DMSF plugin dependencies
 # https://github.com/danmunn/redmine_dmsf#dependencies
 RUN set -ex; \
 	\
@@ -11,11 +11,12 @@ RUN set -ex; \
 		catdvi \
 		djview \
 		djview3 \
+		gcc \
 		gzip \
 		libwpd-0.10-10 \
 		libwps-0.4-4 \
 		libxapian-dev \
-		ruby-xapian \
+		make \
 		unrtf \
 		unzip \
 		uuid \
