@@ -43,7 +43,7 @@ RUN set -ex; \
 	chown -R redmine:redmine /usr/src/redmine/plugins/redmine_dmsf; \
 # ensure the right database adapter is active in the Gemfile.lock
 # install additional gems for Gemfile.local and plugins
-	gosu bundle check || gosu redmine bundle install --jobs "$(nproc)" --without development test; \
+	gosu bundle check || gosu redmine bundle install --jobs "$(nproc)" --no-cache --without development test; \
 	rm -rf ~redmine/.bundle; \
 	\
 # reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
