@@ -1,4 +1,4 @@
-FROM redmine:4.0.7-passenger
+FROM redmine:4.0.8-passenger
 
 ENV DMSF_VERSION 2.4.5
 
