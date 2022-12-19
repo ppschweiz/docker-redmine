@@ -1,4 +1,4 @@
-FROM redmine:4.2.8
+FROM redmine:4.2.9
 
 ENV DMSF_VERSION 2.4.11
 
@@ -36,6 +36,8 @@ RUN set -ex; \
 	; \
 	rm -rf /var/lib/apt/lists/*; \
 	\
+	gosu redmine bundle config --local without 'development test'; \
+	gosu redmine bundle config --local set no-cache 'true'; \
 	mkdir /usr/src/redmine/plugins/redmine_dmsf; \
 	wget -O redmine_dmsf.tar.gz "https://github.com/danmunn/redmine_dmsf/archive/v${DMSF_VERSION}.tar.gz"; \
 	tar -xf redmine_dmsf.tar.gz -C /usr/src/redmine/plugins/redmine_dmsf --strip-components=1; \
@@ -43,7 +45,7 @@ RUN set -ex; \
 	chown -R redmine:redmine /usr/src/redmine/plugins/redmine_dmsf; \
 # ensure the right database adapter is active in the Gemfile.lock
 # install additional gems for Gemfile.local and plugins
-	gosu bundle check || gosu redmine bundle install --jobs "$(nproc)" --no-cache --without development test; \
+	gosu redmine bundle check || gosu redmine bundle install --jobs "$(nproc)"; \
 	rm -rf ~redmine/.bundle; \
 	\
 # reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
