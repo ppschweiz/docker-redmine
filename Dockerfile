@@ -1,6 +1,6 @@
-FROM redmine:4.2.10
+FROM redmine:5.0.6
 
-ENV DMSF_VERSION 2.4.11
+ENV DMSF_VERSION 3.1.1
 
 # Build and install DMSF plugin dependencies
 # https://github.com/danmunn/redmine_dmsf#dependencies
@@ -27,12 +27,14 @@ RUN set -ex; \
 	savedAptMark="$(apt-mark showmanual)"; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
+		g++ \
 		gcc \
 		libwpd-dev \
 		libwps-dev \
 		libxapian-dev \
 		make \
 		uuid-dev \
+		xz-utils \
 	; \
 	rm -rf /var/lib/apt/lists/*; \
 	\
