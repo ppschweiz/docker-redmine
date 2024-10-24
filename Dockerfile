@@ -1,6 +1,6 @@
 FROM redmine:5.0.9
 
-ENV DMSF_VERSION 3.2.2
+ENV DMSF_VERSION 3.2.4
 
 # Build and install DMSF plugin dependencies
 # https://github.com/danmunn/redmine_dmsf#dependencies
