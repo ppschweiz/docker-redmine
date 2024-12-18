@@ -45,27 +45,18 @@ RUN set -ex; \
 	tar -xf redmine_dmsf.tar.gz -C /usr/src/redmine/plugins/redmine_dmsf --strip-components=1; \
 	rm redmine_dmsf.tar.gz; \
 	chown -R redmine:redmine /usr/src/redmine/plugins/redmine_dmsf; \
-# fill up "database.yml" with bogus entries so the redmine Gemfile will pre-install all database adapter dependencies
-# https://github.com/redmine/redmine/blob/e9f9767089a4e3efbd73c35fc55c5c7eb85dd7d3/Gemfile#L50-L79
-	echo '# the following entries only exist to force `bundle install` to pre-install all database adapter dependencies -- they can be safely removed/ignored' > ./config/database.yml; \
-	for adapter in mysql2 postgresql sqlserver sqlite3; do \
-		echo "$adapter:" >> ./config/database.yml; \
-		echo "  adapter: $adapter" >> ./config/database.yml; \
-	done; \
-# nokogiri's vendored libxml2 + libxslt do not build on mips64le, so use the apt packages when building
-	gosu redmine bundle config build.nokogiri --use-system-libraries; \
-	gosu redmine bundle install --jobs "$(nproc)"; \
-	rm ./config/database.yml; \
-# fix permissions for running as an arbitrary user
-	chmod -R ugo=rwX Gemfile.lock "$GEM_HOME"; \
+# ensure the right database adapter is active in the Gemfile.lock
+# install additional gems for Gemfile.local and plugins
+	gosu redmine bundle check || gosu redmine bundle install --jobs "$(nproc)"; \
 	rm -rf ~redmine/.bundle; \
 	\
 # reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
 	apt-mark auto '.*' > /dev/null; \
 	[ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
 	find /usr/local -type f -executable -exec ldd '{}' ';' \
-		| awk '/=>/ { so = $(NF-1); if (index(so, "/usr/local/") == 1) { next }; gsub("^/(usr/)?", "", so); printf "*%s\n", so }' \
+		| awk '/=>/ { print $(NF-1) }' \
 		| sort -u \
+		| grep -v '^/usr/local/' \
 		| xargs -r dpkg-query --search \
 		| cut -d: -f1 \
 		| sort -u \
