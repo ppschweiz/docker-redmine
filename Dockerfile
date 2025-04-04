@@ -1,4 +1,4 @@
-FROM redmine:5.0.10
+FROM redmine:5.0.12
 
 ENV DMSF_VERSION 3.2.4
 
@@ -35,6 +35,7 @@ RUN set -ex; \
 		make \
 		uuid-dev \
 		xz-utils \
+		zlib1g-dev \
 	; \
 	rm -rf /var/lib/apt/lists/*; \
 	\
