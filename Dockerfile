@@ -1,4 +1,4 @@
-FROM redmine:5.0.13
+FROM redmine:5.1.9
 
 ENV DMSF_VERSION 3.2.4
 
