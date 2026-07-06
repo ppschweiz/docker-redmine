@@ -1,6 +1,6 @@
 FROM redmine:6.1
 
-ENV DMSF_VERSION 4.1.3
+ENV DMSF_VERSION 4.2.4
 
 # Build and install DMSF plugin dependencies
 # https://github.com/danmunn/redmine_dmsf#dependencies
@@ -42,7 +42,7 @@ RUN set -ex; \
 	gosu redmine bundle config --local without 'development test'; \
 	gosu redmine bundle config --local set no-cache 'true'; \
 	mkdir /usr/src/redmine/plugins/redmine_dmsf; \
-	wget -O redmine_dmsf.tar.gz "https://github.com/danmunn/redmine_dmsf/archive/v${DMSF_VERSION}.tar.gz"; \
+	wget -O redmine_dmsf.tar.gz "https://github.com/picman/redmine_dmsf/archive/v${DMSF_VERSION}.tar.gz"; \
 	tar -xf redmine_dmsf.tar.gz -C /usr/src/redmine/plugins/redmine_dmsf --strip-components=1; \
 	rm redmine_dmsf.tar.gz; \
 	chown -R redmine:redmine /usr/src/redmine/plugins/redmine_dmsf; \
